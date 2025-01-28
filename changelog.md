@@ -459,7 +459,7 @@ Aware是感知、意识的意思，Aware接口是标记性接口，其实现子�
 
 测试：
 spring.xml
-```
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -473,7 +473,7 @@ spring.xml
 
 </beans>
 ```
-```
+```java
 public class HelloService implements ApplicationContextAware, BeanFactoryAware {
 
 	private ApplicationContext applicationContext;
@@ -499,7 +499,7 @@ public class HelloService implements ApplicationContextAware, BeanFactoryAware {
 	}
 }
 ```
-```
+```java
 public class AwareInterfaceTest {
 
 	@Test
@@ -511,7 +511,6 @@ public class AwareInterfaceTest {
 	}
 }
 ```
-
 
 
 
