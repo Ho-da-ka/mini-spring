@@ -33,6 +33,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 	protected Object doCreateBean(String beanName, BeanDefinition beanDefinition) {
 		Object bean = null;
 		try {
+			//实例化bean
 			bean = createBeanInstance(beanDefinition);
 			//为bean填充属性
 			applyPropertyValues(beanName, bean, beanDefinition);
@@ -98,6 +99,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 	}
 
 	protected Object initializeBean(String beanName, Object bean, BeanDefinition beanDefinition) {
+		// Aware回调
 		if (bean instanceof BeanFactoryAware) {
 			((BeanFactoryAware) bean).setBeanFactory(this);
 		}

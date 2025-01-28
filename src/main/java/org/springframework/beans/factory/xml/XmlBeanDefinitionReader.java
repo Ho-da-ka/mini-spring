@@ -70,8 +70,8 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 		SAXReader reader = new SAXReader();
 		Document document = reader.read(inputStream);
 
-		Element beans = document.getRootElement();
-		List<Element> beanList = beans.elements(BEAN_ELEMENT);
+		Element beans = document.getRootElement(); // 获取根节点 <beans>
+		List<Element> beanList = beans.elements(BEAN_ELEMENT); // 获取所有 <bean> 子元素
 		for (Element bean : beanList) {
 			String beanId = bean.attributeValue(ID_ATTRIBUTE);
 			String beanName = bean.attributeValue(NAME_ATTRIBUTE);

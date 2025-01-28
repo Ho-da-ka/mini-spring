@@ -358,7 +358,25 @@ BeanFactory是spring的基础设施，面向spring本身；而ApplicationContext
 
 ![](./assets/application-context-life-cycle.png)
 
+```mermaid
+sequenceDiagram
+    participant ApplicationContext
+    participant BeanFactory
+    participant BeanPostProcessor
+    participant SingletonBeans
+
+    ApplicationContext ->> BeanFactory: 1. refreshBeanFactory()
+    ApplicationContext ->> BeanFactory: 2. addBeanPostProcessor(ApplicationContextAwareProcessor)
+    ApplicationContext ->> BeanFactory: 3. invokeBeanFactoryPostProcessors()
+    ApplicationContext ->> BeanFactory: 4. registerBeanPostProcessors()
+    ApplicationContext ->> BeanFactory: 5. preInstantiateSingletons()
+    BeanFactory ->> SingletonBeans: 实例化所有单例 Bean
+```
+
+
+
 ## bean的初始化和销毁方法
+
 > 分支：init-and-destroy-method
 
 在spring中，定义bean的初始化和销毁方法有三种方法：
@@ -449,7 +467,7 @@ Aware是感知、意识的意思，Aware接口是标记性接口，其实现子�
 
 让实现BeanFactoryAware接口的类能感知所属的BeanFactory，实现比较简单，查看AbstractAutowireCapableBeanFactory#initializeBean前三行。
 
-实现ApplicationContextAware的接口感知ApplicationContext，是通过BeanPostProcessor。由bean的生命周期可知，bean实例化后会经过BeanPostProcessor的前置处理和后置处理。定义一个BeanPostProcessor的实现类ApplicationContextAwareProcessor，在AbstractApplicationContext#refresh方法中加入到BeanFactory中，在前置处理中为bean设置所属的ApplicationContext。
+实现ApplicationContextAware(这是一个BeanPostProcessor的子类)的接口感知ApplicationContext，是通过BeanPostProcessor。由bean的生命周期可知，bean实例化后会经过BeanPostProcessor的前置处理和后置处理。定义一个BeanPostProcessor的实现类ApplicationContextAwareProcessor，在AbstractApplicationContext#refresh方法中加入到BeanFactory中，在前置处理中为bean设置所属的ApplicationContext。
 
 改用dom4j解析xml文件。
 
@@ -459,6 +477,7 @@ Aware是感知、意识的意思，Aware接口是标记性接口，其实现子�
 
 测试：
 spring.xml
+
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
